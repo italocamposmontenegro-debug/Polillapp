@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -23,424 +24,427 @@
 <body>
     <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
-        const ChevronLeft = ({ size = 24 }) => (
-            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-        );
-        const ChevronRight = ({ size = 24 }) => (
-            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-        );
-        const RotateCcw = ({ size = 20 }) => (
-            <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="1 4 1 10 7 10"></polyline>
-                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-            </svg>
-        );
-        const Volume2 = ({ size = 18, className = '' }) => (
-            <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-            </svg>
-        );
+```
+<script type="text/babel">
+    const { useState, useEffect } = React;
+    const ChevronLeft = ({ size = 24 }) => (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+    );
+    const ChevronRight = ({ size = 24 }) => (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+    );
+    const RotateCcw = ({ size = 20 }) => (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+    );
+    const Volume2 = ({ size = 18, className = '' }) => (
+        <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+    );
 
-        const SceneAnimation = ({ sceneId }) => {
-            const animations = {
-                1: (
-                    <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <radialGradient id="lightGlow1">
-                                <stop offset="0%" stopColor="#fef3c7" />
-                                <stop offset="100%" stopColor="#a8d8ea" />
-                            </radialGradient>
-                        </defs>
-                        <rect width="400" height="300" fill="url(#lightGlow1)"/>
-                        <circle cx="320" cy="80" r="35" fill="#fef3c7">
-                            <animate attributeName="opacity" values="0.8;1;0.8" dur="1.5s" repeatCount="indefinite"/>
-                        </circle>
-                        <circle cx="320" cy="80" r="50" fill="#fef3c7" opacity="0.3">
-                            <animate attributeName="r" values="50;60;50" dur="1.5s" repeatCount="indefinite"/>
-                        </circle>
-                        <g>
-                            <animateTransform attributeName="transform" type="translate" values="100,200; 200,140; 280,90" dur="4s" repeatCount="indefinite"/>
-                            <ellipse cx="0" cy="0" rx="10" ry="20" fill="#7c3aed"/>
-                            <ellipse cx="-15" cy="-5" rx="20" ry="28" fill="#a78bfa" opacity="0.8">
-                                <animateTransform attributeName="transform" type="rotate" values="0,-15,-5; -20,-15,-5; 0,-15,-5" dur="0.4s" repeatCount="indefinite"/>
-                            </ellipse>
-                            <ellipse cx="15" cy="-5" rx="20" ry="28" fill="#a78bfa" opacity="0.8">
-                                <animateTransform attributeName="transform" type="rotate" values="0,15,-5; 20,15,-5; 0,15,-5" dur="0.4s" repeatCount="indefinite"/>
-                            </ellipse>
-                            <line x1="-3" y1="-20" x2="-8" y2="-32" stroke="#5b21b6" strokeWidth="2"/>
-                            <line x1="3" y1="-20" x2="8" y2="-32" stroke="#5b21b6" strokeWidth="2"/>
-                        </g>
-                        <text x="200" y="280" fontFamily="Arial" fontSize="16" fill="#6b7280" textAnchor="middle" fontWeight="bold">
-                            Valentina busca la luz
-                        </text>
-                    </svg>
-                ),
-                2: (
-                    <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="400" height="300" fill="#e0f2fe"/>
-                        <rect x="80" y="60" width="240" height="140" fill="#1e293b" rx="5"/>
-                        <rect x="85" y="65" width="230" height="130" fill="#334155" rx="3"/>
-                        <circle cx="200" cy="110" r="25" fill="#fef3c7" opacity="0.8">
-                            <animate attributeName="opacity" values="0.8;1;0.8" dur="1.2s" repeatCount="indefinite"/>
-                        </circle>
-                        <circle cx="200" cy="110" r="35" fill="#fef3c7" opacity="0.3">
-                            <animate attributeName="r" values="35;40;35" dur="1.2s" repeatCount="indefinite"/>
-                            <animate attributeName="opacity" values="0.3;0.1;0.3" dur="1.2s" repeatCount="indefinite"/>
-                        </circle>
-                        <line x1="170" y1="110" x2="150" y2="110" stroke="#ef4444" strokeWidth="3">
-                            <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite"/>
+    const SceneAnimation = ({ sceneId }) => {
+        const animations = {
+            1: (
+                <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="lightGlow1">
+                            <stop offset="0%" stopColor="#fef3c7" />
+                            <stop offset="100%" stopColor="#a8d8ea" />
+                        </radialGradient>
+                    </defs>
+                    <rect width="400" height="300" fill="url(#lightGlow1)"/>
+                    <circle cx="320" cy="80" r="35" fill="#fef3c7">
+                        <animate attributeName="opacity" values="0.8;1;0.8" dur="1.5s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="320" cy="80" r="50" fill="#fef3c7" opacity="0.3">
+                        <animate attributeName="r" values="50;60;50" dur="1.5s" repeatCount="indefinite"/>
+                    </circle>
+                    <g>
+                        <animateTransform attributeName="transform" type="translate" values="100,200; 200,140; 280,90" dur="4s" repeatCount="indefinite"/>
+                        <ellipse cx="0" cy="0" rx="10" ry="20" fill="#7c3aed"/>
+                        <ellipse cx="-15" cy="-5" rx="20" ry="28" fill="#a78bfa" opacity="0.8">
+                            <animateTransform attributeName="transform" type="rotate" values="0,-15,-5; -20,-15,-5; 0,-15,-5" dur="0.4s" repeatCount="indefinite"/>
+                        </ellipse>
+                        <ellipse cx="15" cy="-5" rx="20" ry="28" fill="#a78bfa" opacity="0.8">
+                            <animateTransform attributeName="transform" type="rotate" values="0,15,-5; 20,15,-5; 0,15,-5" dur="0.4s" repeatCount="indefinite"/>
+                        </ellipse>
+                        <line x1="-3" y1="-20" x2="-8" y2="-32" stroke="#5b21b6" strokeWidth="2"/>
+                        <line x1="3" y1="-20" x2="8" y2="-32" stroke="#5b21b6" strokeWidth="2"/>
+                    </g>
+                    <text x="200" y="280" fontFamily="Arial" fontSize="16" fill="#6b7280" textAnchor="middle" fontWeight="bold">
+                        Valentina busca la luz
+                    </text>
+                </svg>
+            ),
+            2: (
+                <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="400" height="300" fill="#e0f2fe"/>
+                    <rect x="80" y="60" width="240" height="140" fill="#1e293b" rx="5"/>
+                    <rect x="85" y="65" width="230" height="130" fill="#334155" rx="3"/>
+                    <circle cx="200" cy="110" r="25" fill="#fef3c7" opacity="0.8">
+                        <animate attributeName="opacity" values="0.8;1;0.8" dur="1.2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="200" cy="110" r="35" fill="#fef3c7" opacity="0.3">
+                        <animate attributeName="r" values="35;40;35" dur="1.2s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.3;0.1;0.3" dur="1.2s" repeatCount="indefinite"/>
+                    </circle>
+                    <line x1="170" y1="110" x2="150" y2="110" stroke="#ef4444" strokeWidth="3">
+                        <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite"/>
+                    </line>
+                    <line x1="160" y1="100" x2="160" y2="120" stroke="#ef4444" strokeWidth="3">
+                        <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite"/>
+                    </line>
+                    <line x1="230" y1="110" x2="250" y2="110" stroke="#ef4444" strokeWidth="3">
+                        <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" begin="0.3s" repeatCount="indefinite"/>
+                    </line>
+                    <line x1="240" y1="100" x2="240" y2="120" stroke="#ef4444" strokeWidth="3">
+                        <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" begin="0.3s" repeatCount="indefinite"/>
+                    </line>
+                    <text x="200" y="160" fontFamily="Arial" fontSize="14" fill="#fef3c7" textAnchor="middle" fontWeight="bold">
+                        <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+                        ¡CUIDADO!
+                    </text>
+                    <g>
+                        <animateTransform attributeName="transform" type="translate" values="0,0; 0,-3; 0,0" dur="2s" repeatCount="indefinite"/>
+                        <circle cx="320" cy="150" r="20" fill="#f472b6"/>
+                        <circle cx="312" cy="145" r="3" fill="#1e293b"/>
+                        <circle cx="328" cy="145" r="3" fill="#1e293b"/>
+                        <path d="M 315 155 Q 320 158 325 155" stroke="#1e293b" strokeWidth="2" fill="none"/>
+                        <rect x="300" y="170" width="40" height="60" fill="#ec4899" rx="5"/>
+                        <line x1="300" y1="180" x2="250" y2="120" stroke="#ec4899" strokeWidth="4" strokeLinecap="round">
+                            <animate attributeName="x2" values="250;245;250" dur="1.5s" repeatCount="indefinite"/>
+                            <animate attributeName="y2" values="120;115;120" dur="1.5s" repeatCount="indefinite"/>
                         </line>
-                        <line x1="160" y1="100" x2="160" y2="120" stroke="#ef4444" strokeWidth="3">
-                            <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite"/>
-                        </line>
-                        <line x1="230" y1="110" x2="250" y2="110" stroke="#ef4444" strokeWidth="3">
-                            <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" begin="0.3s" repeatCount="indefinite"/>
-                        </line>
-                        <line x1="240" y1="100" x2="240" y2="120" stroke="#ef4444" strokeWidth="3">
-                            <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" begin="0.3s" repeatCount="indefinite"/>
-                        </line>
-                        <text x="200" y="160" fontFamily="Arial" fontSize="14" fill="#fef3c7" textAnchor="middle" fontWeight="bold">
-                            <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
-                            ¡CUIDADO!
+                    </g>
+                    <g transform="translate(100, 200)">
+                        <ellipse cx="0" cy="0" rx="8" ry="16" fill="#7c3aed"/>
+                        <ellipse cx="-12" cy="-4" rx="14" ry="20" fill="#a78bfa" opacity="0.8">
+                            <animateTransform attributeName="transform" type="rotate" values="0,-12,-4; -8,-12,-4; 0,-12,-4" dur="1.5s" repeatCount="indefinite"/>
+                        </ellipse>
+                        <ellipse cx="12" cy="-4" rx="14" ry="20" fill="#a78bfa" opacity="0.8">
+                            <animateTransform attributeName="transform" type="rotate" values="0,12,-4; 8,12,-4; 0,12,-4" dur="1.5s" repeatCount="indefinite"/>
+                        </ellipse>
+                        <line x1="-3" y1="-16" x2="-7" y2="-26" stroke="#5b21b6" strokeWidth="2"/>
+                        <line x1="3" y1="-16" x2="7" y2="-26" stroke="#5b21b6" strokeWidth="2"/>
+                    </g>
+                    <g opacity="0.7">
+                        <text x="130" y="170" fontSize="24" fill="#ef4444" fontWeight="bold">
+                            <animate attributeName="y" values="170;160;170" dur="1.5s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
+                            !
                         </text>
-                        <g>
-                            <animateTransform attributeName="transform" type="translate" values="0,0; 0,-3; 0,0" dur="2s" repeatCount="indefinite"/>
-                            <circle cx="320" cy="150" r="20" fill="#f472b6"/>
-                            <circle cx="312" cy="145" r="3" fill="#1e293b"/>
-                            <circle cx="328" cy="145" r="3" fill="#1e293b"/>
-                            <path d="M 315 155 Q 320 158 325 155" stroke="#1e293b" strokeWidth="2" fill="none"/>
-                            <rect x="300" y="170" width="40" height="60" fill="#ec4899" rx="5"/>
-                            <line x1="300" y1="180" x2="250" y2="120" stroke="#ec4899" strokeWidth="4" strokeLinecap="round">
-                                <animate attributeName="x2" values="250;245;250" dur="1.5s" repeatCount="indefinite"/>
-                                <animate attributeName="y2" values="120;115;120" dur="1.5s" repeatCount="indefinite"/>
-                            </line>
-                        </g>
-                        <g transform="translate(100, 200)">
-                            <ellipse cx="0" cy="0" rx="8" ry="16" fill="#7c3aed"/>
-                            <ellipse cx="-12" cy="-4" rx="14" ry="20" fill="#a78bfa" opacity="0.8">
-                                <animateTransform attributeName="transform" type="rotate" values="0,-12,-4; -8,-12,-4; 0,-12,-4" dur="1.5s" repeatCount="indefinite"/>
-                            </ellipse>
-                            <ellipse cx="12" cy="-4" rx="14" ry="20" fill="#a78bfa" opacity="0.8">
-                                <animateTransform attributeName="transform" type="rotate" values="0,12,-4; 8,12,-4; 0,12,-4" dur="1.5s" repeatCount="indefinite"/>
-                            </ellipse>
-                            <line x1="-3" y1="-16" x2="-7" y2="-26" stroke="#5b21b6" strokeWidth="2"/>
-                            <line x1="3" y1="-16" x2="7" y2="-26" stroke="#5b21b6" strokeWidth="2"/>
-                        </g>
-                        <g opacity="0.7">
-                            <text x="130" y="170" fontSize="24" fill="#ef4444" fontWeight="bold">
-                                <animate attributeName="y" values="170;160;170" dur="1.5s" repeatCount="indefinite"/>
-                                <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
-                                !
-                            </text>
-                            <text x="270" y="180" fontSize="20" fill="#ef4444" fontWeight="bold">
-                                <animate attributeName="y" values="180;170;180" dur="1.8s" begin="0.5s" repeatCount="indefinite"/>
-                                <animate attributeName="opacity" values="0.5;1;0.5" dur="1.8s" begin="0.5s" repeatCount="indefinite"/>
-                                !
-                            </text>
-                        </g>
-                        <text x="200" y="280" fontFamily="Arial" fontSize="16" fill="#6b7280" textAnchor="middle" fontWeight="bold">
-                            Le advirtieron en la escuela
+                        <text x="270" y="180" fontSize="20" fill="#ef4444" fontWeight="bold">
+                            <animate attributeName="y" values="180;170;180" dur="1.8s" begin="0.5s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" values="0.5;1;0.5" dur="1.8s" begin="0.5s" repeatCount="indefinite"/>
+                            !
                         </text>
-                    </svg>
-                ),
-                3: (
-                    <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="400" height="300" fill="#fef3c7"/>
-                        <circle cx="200" cy="100" r="40" fill="#fbbf24">
-                            <animate attributeName="r" values="40;45;40" dur="1.5s" repeatCount="indefinite"/>
+                    </g>
+                    <text x="200" y="280" fontFamily="Arial" fontSize="16" fill="#6b7280" textAnchor="middle" fontWeight="bold">
+                        Le advirtieron en la escuela
+                    </text>
+                </svg>
+            ),
+            3: (
+                <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="400" height="300" fill="#fef3c7"/>
+                    <circle cx="200" cy="100" r="40" fill="#fbbf24">
+                        <animate attributeName="r" values="40;45;40" dur="1.5s" repeatCount="indefinite"/>
+                    </circle>
+                    <g>
+                        <animateTransform attributeName="transform" type="translate" values="200,180; 220,170; 200,180; 180,170; 200,180" dur="3s" repeatCount="indefinite"/>
+                        <ellipse cx="0" cy="0" rx="10" ry="20" fill="#ec4899"/>
+                        <ellipse cx="-15" cy="-5" rx="22" ry="30" fill="#a78bfa" opacity="0.9">
+                            <animateTransform attributeName="transform" type="rotate" values="-10,-15,-5; -30,-15,-5; -10,-15,-5" dur="0.8s" repeatCount="indefinite"/>
+                        </ellipse>
+                        <ellipse cx="15" cy="-5" rx="22" ry="30" fill="#a78bfa" opacity="0.9">
+                            <animateTransform attributeName="transform" type="rotate" values="10,15,-5; 30,15,-5; 10,15,-5" dur="0.8s" repeatCount="indefinite"/>
+                        </ellipse>
+                    </g>
+                    <g>
+                        <animateTransform attributeName="transform" type="translate" values="120,200; 130,190; 120,200" dur="2.5s" repeatCount="indefinite"/>
+                        <ellipse cx="0" cy="0" rx="8" ry="16" fill="#3b82f6"/>
+                        <ellipse cx="-12" cy="-4" rx="16" ry="22" fill="#60a5fa" opacity="0.8">
+                            <animateTransform attributeName="transform" type="rotate" values="0,-12,-4; -25,-12,-4; 0,-12,-4" dur="0.6s" repeatCount="indefinite"/>
+                        </ellipse>
+                        <ellipse cx="12" cy="-4" rx="16" ry="22" fill="#60a5fa" opacity="0.8">
+                            <animateTransform attributeName="transform" type="rotate" values="0,12,-4; 25,12,-4; 0,12,-4" dur="0.6s" repeatCount="indefinite"/>
+                        </ellipse>
+                    </g>
+                    <text x="200" y="280" fontFamily="Arial" fontSize="16" fill="#6b7280" textAnchor="middle" fontWeight="bold">
+                        Valentina y amigos bailan
+                    </text>
+                </svg>
+            ),
+            4: (
+                <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="400" height="300" fill="#475569"/>
+                    <g transform="translate(120, 100)">
+                        <ellipse cx="0" cy="0" rx="30" ry="40" fill="#fbbf24"/>
+                        <circle cx="0" cy="-5" r="35" fill="#fef3c7" opacity="0.5">
+                            <animate attributeName="r" values="35;42;35" dur="1s" repeatCount="indefinite"/>
                         </circle>
-                        <g>
-                            <animateTransform attributeName="transform" type="translate" values="200,180; 220,170; 200,180; 180,170; 200,180" dur="3s" repeatCount="indefinite"/>
-                            <ellipse cx="0" cy="0" rx="10" ry="20" fill="#ec4899"/>
-                            <ellipse cx="-15" cy="-5" rx="22" ry="30" fill="#a78bfa" opacity="0.9">
-                                <animateTransform attributeName="transform" type="rotate" values="-10,-15,-5; -30,-15,-5; -10,-15,-5" dur="0.8s" repeatCount="indefinite"/>
-                            </ellipse>
-                            <ellipse cx="15" cy="-5" rx="22" ry="30" fill="#a78bfa" opacity="0.9">
-                                <animateTransform attributeName="transform" type="rotate" values="10,15,-5; 30,15,-5; 10,15,-5" dur="0.8s" repeatCount="indefinite"/>
-                            </ellipse>
-                        </g>
-                        <g>
-                            <animateTransform attributeName="transform" type="translate" values="120,200; 130,190; 120,200" dur="2.5s" repeatCount="indefinite"/>
-                            <ellipse cx="0" cy="0" rx="8" ry="16" fill="#3b82f6"/>
-                            <ellipse cx="-12" cy="-4" rx="16" ry="22" fill="#60a5fa" opacity="0.8">
-                                <animateTransform attributeName="transform" type="rotate" values="0,-12,-4; -25,-12,-4; 0,-12,-4" dur="0.6s" repeatCount="indefinite"/>
-                            </ellipse>
-                            <ellipse cx="12" cy="-4" rx="16" ry="22" fill="#60a5fa" opacity="0.8">
-                                <animateTransform attributeName="transform" type="rotate" values="0,12,-4; 25,12,-4; 0,12,-4" dur="0.6s" repeatCount="indefinite"/>
-                            </ellipse>
-                        </g>
-                        <text x="200" y="280" fontFamily="Arial" fontSize="16" fill="#6b7280" textAnchor="middle" fontWeight="bold">
-                            Valentina y amigos bailan
-                        </text>
-                    </svg>
-                ),
-                4: (
-                    <svg width="100%" height="100%" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="400" height="300" fill="#475569"/>
-                        <g transform="translate(120, 100)">
-                            <ellipse cx="0" cy="0" rx="30" ry="40" fill="#fbbf24"/>
-                            <circle cx="0" cy="-5" r="35" fill="#fef3c7" opacity="0.5">
-                                <animate attributeName="r" values="35;42;35" dur="1s" repeatCount="indefinite"/>
-                            </circle>
-                            <ellipse cx="-8" cy="-8" rx="3" ry="5" fill="#1e293b"/>
-                            <ellipse cx="8" cy="-8" rx="3" ry="5" fill="#1e293b"/>
-                        </g>
-                        <g transform="translate(320, 80)">
-                            <circle cx="0" cy="0" r="35" fill="#fbbf24" opacity="0.8">
-                                <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle cx="0" cy="0" r="25" fill="#fef3c7"/>
-                        </g>
-                        <text x="200" y="280" fontFamily="Arial" fontSize="16" fill="#e5e7eb" textAnchor="middle" fontWeight="bold">
-                            Busca la verdadera luz
-                        </text>
-                    </svg>
-                )
-            };
-            return animations[sceneId] || animations[1];
+                        <ellipse cx="-8" cy="-8" rx="3" ry="5" fill="#1e293b"/>
+                        <ellipse cx="8" cy="-8" rx="3" ry="5" fill="#1e293b"/>
+                    </g>
+                    <g transform="translate(320, 80)">
+                        <circle cx="0" cy="0" r="35" fill="#fbbf24" opacity="0.8">
+                            <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="0" cy="0" r="25" fill="#fef3c7"/>
+                    </g>
+                    <text x="200" y="280" fontFamily="Arial" fontSize="16" fill="#e5e7eb" textAnchor="middle" fontWeight="bold">
+                        Busca la verdadera luz
+                    </text>
+                </svg>
+            )
         };
+        return animations[sceneId] || animations[1];
+    };
 
-        const PhonemeButton = ({ syllable, isActive, onClick }) => {
-            const speakSyllable = () => {
-                if ('speechSynthesis' in window) {
-                    speechSynthesis.cancel();
-
-                    const syllableMap = {
-                        'pa': 'pah', 'pe': 'peh', 'pi': 'pii', 'po': 'poh', 'pu': 'puu',
-                        'ba': 'bah', 'be': 'beh', 'bi': 'bii', 'bo': 'boh', 'bu': 'buu',
-                        'ma': 'mah', 'me': 'meh', 'mi': 'mii', 'mo': 'moh', 'mu': 'muu',
-                        'ta': 'tah', 'te': 'teh', 'ti': 'tii', 'to': 'toh', 'tu': 'tuu',
-                        'da': 'dah', 'de': 'deh', 'di': 'dii', 'do': 'doh', 'du': 'duu',
-                        'la': 'lah', 'le': 'leh', 'li': 'lii', 'lo': 'loh', 'lu': 'luu',
-                        'ra': 'rah', 're': 'reh', 'ri': 'rii', 'ro': 'roh', 'ru': 'ruu',
-                        'sa': 'sah', 'se': 'seh', 'si': 'sii', 'so': 'soh', 'su': 'suu',
-                        'ca': 'cah', 'co': 'coh', 'cu': 'cuu',
-                        'que': 'keh', 'qui': 'kii',
-                        'ga': 'gah', 'gue': 'gueh', 'gui': 'guii', 'go': 'goh', 'gu': 'guu',
-                        'fa': 'fah', 'fe': 'feh', 'fi': 'fii', 'fo': 'foh', 'fu': 'fuu',
-                        'va': 'vah', 've': 'veh', 'vi': 'vii', 'vo': 'voh', 'vu': 'vuu',
-                        'ja': 'hah', 'je': 'heh', 'ji': 'hii', 'jo': 'hoh', 'ju': 'huu',
-                        'cue': 'cueh', 'bai': 'bai.', 'vue': 'vueh', 'ver': 'verr', 'es': 'ess'
-                    };
-
-                    const textToSpeak = syllableMap[syllable.toLowerCase()] || syllable;
-
-                    const speak = () => {
-                        const voices = speechSynthesis.getVoices();
-                        const utterance = new SpeechSynthesisUtterance(textToSpeak);
-
-                        const spanishVoice = voices.find(voice => 
-                            voice.lang.startswith('es-MX') || 
-                            voice.lang.startswith('es-AR') ||
-                            voice.lang.startswith('es-CO') ||
-                            voice.lang.startswith('es-CL') ||
-                            voice.lang.startswith('es-US') ||
-                            voice.lang.startswith('es')
-                        );
-
-                        if (spanishVoice) {
-                            utterance.voice = spanishVoice;
-                            utterance.lang = spanishVoice.lang;
-                        } else {
-                            utterance.lang = 'es-MX';
-                        }
-
-                        utterance.rate = 0.6;
-                        utterance.pitch = 1.1;
-                        utterance.volume = 1;
-
-                        speechSynthesis.speak(utterance);
-                    };
-
-                    if (speechSynthesis.getVoices().length > 0) {
-                        speak();
+    const PhonemeButton = ({ syllable, isActive, onClick }) => {
+        const speakSyllable = () => {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                
+                const syllableMap = {
+                    'pa': 'pah', 'pe': 'peh', 'pi': 'pii', 'po': 'poh', 'pu': 'puu',
+                    'ba': 'bah', 'be': 'beh', 'bi': 'bii', 'bo': 'boh', 'bu': 'buu',
+                    'ma': 'mah', 'me': 'meh', 'mi': 'mii', 'mo': 'moh', 'mu': 'muu',
+                    'ta': 'tah', 'te': 'teh', 'ti': 'tii', 'to': 'toh', 'tu': 'tuu',
+                    'da': 'dah', 'de': 'deh', 'di': 'dii', 'do': 'doh', 'du': 'duu',
+                    'la': 'lah', 'le': 'leh', 'li': 'lii', 'lo': 'loh', 'lu': 'luu',
+                    'ra': 'rah', 're': 'reh', 'ri': 'rii', 'ro': 'roh', 'ru': 'ruu',
+                    'sa': 'sah', 'se': 'seh', 'si': 'sii', 'so': 'soh', 'su': 'suu',
+                    'ca': 'cah', 'co': 'coh', 'cu': 'cuu',
+                    'que': 'keh', 'qui': 'kii',
+                    'ga': 'gah', 'gue': 'gueh', 'gui': 'guii', 'go': 'goh', 'gu': 'guu',
+                    'fa': 'fah', 'fe': 'feh', 'fi': 'fii', 'fo': 'foh', 'fu': 'fuu',
+                    'va': 'vah', 've': 'veh', 'vi': 'vii', 'vo': 'voh', 'vu': 'vuu',
+                    'ja': 'hah', 'je': 'heh', 'ji': 'hii', 'jo': 'hoh', 'ju': 'huu',
+                    'cue': 'cueh', 'bai': 'bai.', 'vue': 'vueh', 'ver': 'verr', 'es': 'ess'
+                };
+                
+                const textToSpeak = syllableMap[syllable.toLowerCase()] || syllable;
+                
+                const speak = () => {
+                    const voices = speechSynthesis.getVoices();
+                    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+                    
+                    const spanishVoice = voices.find(voice => 
+                        voice.lang.startsWith('es-MX') || 
+                        voice.lang.startsWith('es-AR') ||
+                        voice.lang.startsWith('es-CO') ||
+                        voice.lang.startsWith('es-CL') ||
+                        voice.lang.startsWith('es-US') ||
+                        voice.lang.startsWith('es')
+                    );
+                    
+                    if (spanishVoice) {
+                        utterance.voice = spanishVoice;
+                        utterance.lang = spanishVoice.lang;
                     } else {
-                        speechSynthesis.addEventListener('voiceschanged', speak, { once: true });
+                        utterance.lang = 'es-MX';
                     }
+                    
+                    utterance.rate = 0.6;
+                    utterance.pitch = 1.1;
+                    utterance.volume = 1;
+                    
+                    speechSynthesis.speak(utterance);
+                };
+                
+                if (speechSynthesis.getVoices().length > 0) {
+                    speak();
+                } else {
+                    speechSynthesis.addEventListener('voiceschanged', speak, { once: true });
                 }
-                onClick();
-            };
-
-            return (
-                <button className={`phoneme-button ${isActive ? 'active' : ''}`} onClick={speakSyllable}>
-                    <span className="phoneme-text">{syllable}</span>
-                    <Volume2 size={18} className="phoneme-icon" />
-                    {isActive && (
-                        <div className="sound-wave">
-                            <div className="wave"></div>
-                            <div className="wave"></div>
-                            <div className="wave"></div>
-                        </div>
-                    )}
-                </button>
-            );
+            }
+            onClick();
         };
 
-        const scenesData = [
-            {
-                id: 1,
-                title: "En busca de la luz",
-                text: "La polilla Valentina siempre en busca de la luz, sus alitas se chamusca…",
-                syllables: ["la", "le", "li", "lo", "lu"],
-                keywords: ["luz", "alitas", "Valentina"]
-            },
-            {
-                id: 2,
-                title: "La advertencia",
-                text: "Le advirtieron en la escuela que cuidara de la luz, no te acerques, le dijeron, que te quemas en la luz.",
-                syllables: ["la", "le", "li", "es", "cue"],
-                keywords: ["escuela", "luz", "dijeron"]
-            },
-            {
-                id: 3,
-                title: "El baile",
-                text: "Linda ropa ella se pone y vuela en busca de la luz… Los amigos la acompañan a bailarle a aquella luz…",
-                syllables: ["ro", "pa", "vue", "la", "bai"],
-                keywords: ["ropa", "vuela", "amigos", "bailar"]
-            },
-            {
-                id: 4,
-                title: "La verdadera luz",
-                text: "Luz coqueta de ampolleta presumida es esa luz… no te apenes Valentina, busca verdadera luz.",
-                syllables: ["co", "que", "ta", "ver", "da"],
-                keywords: ["coqueta", "ampolleta", "verdadera"]
-            }
-        ];
+        return (
+            <button className={`phoneme-button ${isActive ? 'active' : ''}`} onClick={speakSyllable}>
+                <span className="phoneme-text">{syllable}</span>
+                <Volume2 size={18} className="phoneme-icon" />
+                {isActive && (
+                    <div className="sound-wave">
+                        <div className="wave"></div>
+                        <div className="wave"></div>
+                        <div className="wave"></div>
+                    </div>
+                )}
+            </button>
+        );
+    };
 
-        function App() {
-            const [currentScene, setCurrentScene] = useState(0);
-            const [activePhoneme, setActivePhoneme] = useState(null);
-
-            const scene = scenesData[currentScene];
-
-            const handlePhonemeClick = (syllable) => {
-                setActivePhoneme(syllable);
-                setTimeout(() => setActivePhoneme(null), 1000);
-            };
-
-            return (
-                <div className="app">
-                    <header className="app-header">
-                        <h1 className="app-title">🦋 La Polilla Valentina</h1>
-                        <p className="app-subtitle">Aplicación Terapéutica de Fonoaudiología</p>
-                    </header>
-
-                    <main className="app-main">
-                        <div className="progress-container">
-                            <div className="progress-dots">
-                                {scenesData.map((_, i) => (
-                                    <button key={i} className={`progress-dot ${currentScene === i ? 'active' : ''}`} onClick={() => setCurrentScene(i)} />
-                                ))}
-                            </div>
-                            <div className="progress-text">Escena {currentScene + 1} de {scenesData.length}</div>
-                        </div>
-
-                        <div className="scene-view">
-                            <div className="scene-image-container">
-                                <SceneAnimation sceneId={scene.id} />
-                            </div>
-
-                            <div className="scene-content">
-                                <h2 className="scene-title">{scene.title}</h2>
-                                <p className="scene-text">{scene.text}</p>
-
-                                <div className="phonemes-section">
-                                    <h3 className="section-label">Sílabas para practicar:</h3>
-                                    <div className="phonemes-container">
-                                        {scene.syllables.map((syllable, index) => (
-                                            <PhonemeButton key={index} syllable={syllable} isActive={activePhoneme === syllable} onClick={() => handlePhonemeClick(syllable)} />
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="keywords-section">
-                                    <h3 className="section-label">Palabras clave:</h3>
-                                    <div className="keywords-container">
-                                        {scene.keywords.map((word, index) => (
-                                            <div key={index} className="keyword-chip">{word}</div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="toolbar">
-                            <button className="nav-button" onClick={() => setCurrentScene(Math.max(0, currentScene - 1))} disabled={currentScene === 0}>
-                                <ChevronLeft size={24} /><span>Anterior</span>
-                            </button>
-                            <button className="reset-button" onClick={() => setActivePhoneme(null)}>
-                                <RotateCcw size={20} /><span>Reiniciar</span>
-                            </button>
-                            <button className="nav-button" onClick={() => setCurrentScene(Math.min(scenesData.length - 1, currentScene + 1))} disabled={currentScene === scenesData.length - 1}>
-                                <span>Siguiente</span><ChevronRight size={24} />
-                            </button>
-                        </div>
-                    </main>
-
-                    <style>{`
-                        * { box-sizing: border-box; margin: 0; padding: 0; }
-                        .app { min-height: 100vh; background: linear-gradient(135deg, #e8f4f8 0%, #f3e8ff 100%); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1f2937; }
-                        .app-header { background: white; padding: 1.5rem 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; }
-                        .app-title { font-size: 2rem; font-weight: 700; color: #7c3aed; margin-bottom: 0.5rem; }
-                        .app-subtitle { font-size: 1rem; color: #6b7280; font-weight: 500; }
-                        .app-main { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
-                        .progress-container { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: center; }
-                        .progress-dots { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
-                        .progress-dot { width: 14px; height: 14px; border-radius: 50%; background: #d1d5db; border: none; cursor: pointer; transition: all 0.3s ease; }
-                        .progress-dot:hover { background: #9ca3af; transform: scale(1.2); }
-                        .progress-dot.active { background: #7c3aed; width: 18px; height: 18px; box-shadow: 0 0 0 4px rgba(124,58,237,0.2); }
-                        .progress-text { font-size: 0.95rem; color: #6b7280; font-weight: 500; }
-                        .scene-view { background: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-                        .scene-image-container { margin-bottom: 2rem; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-                        .scene-title { font-size: 1.75rem; font-weight: 700; color: #7c3aed; margin-bottom: 1rem; }
-                        .scene-text { font-size: 1.125rem; line-height: 1.7; color: #374151; margin-bottom: 2rem; font-style: italic; }
-                        .section-label { font-size: 1rem; font-weight: 600; color: #4b5563; margin-bottom: 0.75rem; display: block; }
-                        .phonemes-section { margin-bottom: 2rem; }
-                        .phonemes-container { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-                        .phoneme-button { position: relative; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; font-size: 1.25rem; font-weight: 600; color: #7c3aed; background: #f3e8ff; border: 2px solid #7c3aed; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; overflow: hidden; }
-                        .phoneme-button:hover { background: #e9d5ff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
-                        .phoneme-button.active { background: #7c3aed; color: white; animation: phonemeClick 0.6s ease; }
-                        .phoneme-text { position: relative; z-index: 2; }
-                        .phoneme-icon { position: relative; z-index: 2; opacity: 0.7; }
-                        .phoneme-button.active .phoneme-icon { opacity: 1; animation: iconPulse 0.6s ease; }
-                        @keyframes phonemeClick { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
-                        @keyframes iconPulse { 0%, 100% { transform: scale(1); } 25%, 75% { transform: scale(1.3); } 50% { transform: scale(1.1); } }
-                        .sound-wave { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; gap: 4px; z-index: 1; }
-                        .wave { width: 3px; height: 20px; background: white; border-radius: 3px; animation: waveAnimation 0.6s ease-in-out infinite; }
-                        .wave:nth-child(1) { animation-delay: 0s; }
-                        .wave:nth-child(2) { animation-delay: 0.1s; }
-                        .wave:nth-child(3) { animation-delay: 0.2s; }
-                        @keyframes waveAnimation { 0%, 100% { height: 10px; } 50% { height: 30px; } }
-                        .keywords-section { margin-bottom: 1.5rem; }
-                        .keywords-container { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-                        .keyword-chip { display: inline-flex; align-items: center; padding: 0.5rem 1rem; font-size: 1rem; font-weight: 500; color: #1f2937; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 20px; }
-                        .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-                        .nav-button, .reset-button { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
-                        .nav-button { background: #7c3aed; color: white; }
-                        .nav-button:hover:not(:disabled) { background: #6d28d9; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
-                        .nav-button:disabled { background: #e5e7eb; color: #9ca3af; cursor: not-allowed; }
-                        .reset-button { background: #f3f4f6; color: #374151; border: 2px solid #d1d5db; }
-                        .reset-button:hover { background: #e5e7eb; border-color: #9ca3af; }
-                        @media (max-width: 768px) {
-                            .app-title { font-size: 1.5rem; }
-                            .scene-title { font-size: 1.5rem; }
-                            .scene-text { font-size: 1rem; }
-                            .toolbar { flex-direction: column; }
-                            .nav-button, .reset-button { width: 100%; justify-content: center; }
-                        }
-                    `}</style>
-                </div>
-            );
+    const scenesData = [
+        {
+            id: 1,
+            title: "En busca de la luz",
+            text: "La polilla Valentina siempre en busca de la luz, sus alitas se chamusca…",
+            syllables: ["la", "le", "li", "lo", "lu"],
+            keywords: ["luz", "alitas", "Valentina"]
+        },
+        {
+            id: 2,
+            title: "La advertencia",
+            text: "Le advirtieron en la escuela que cuidara de la luz, no te acerques, le dijeron, que te quemas en la luz.",
+            syllables: ["la", "le", "li", "es", "cue"],
+            keywords: ["escuela", "luz", "dijeron"]
+        },
+        {
+            id: 3,
+            title: "El baile",
+            text: "Linda ropa ella se pone y vuela en busca de la luz… Los amigos la acompañan a bailarle a aquella luz…",
+            syllables: ["ro", "pa", "vue", "la", "bai"],
+            keywords: ["ropa", "vuela", "amigos", "bailar"]
+        },
+        {
+            id: 4,
+            title: "La verdadera luz",
+            text: "Luz coqueta de ampolleta presumida es esa luz… no te apenes Valentina, busca verdadera luz.",
+            syllables: ["co", "que", "ta", "ver", "da"],
+            keywords: ["coqueta", "ampolleta", "verdadera"]
         }
+    ];
 
-        ReactDOM.render(<App />, document.getElementById('root'));
-    </script>
+    function App() {
+        const [currentScene, setCurrentScene] = useState(0);
+        const [activePhoneme, setActivePhoneme] = useState(null);
+        
+        const scene = scenesData[currentScene];
+        
+        const handlePhonemeClick = (syllable) => {
+            setActivePhoneme(syllable);
+            setTimeout(() => setActivePhoneme(null), 1000);
+        };
+        
+        return (
+            <div className="app">
+                <header className="app-header">
+                    <h1 className="app-title">🦋 La Polilla Valentina</h1>
+                    <p className="app-subtitle">Aplicación Terapéutica de Fonoaudiología</p>
+                </header>
+                
+                <main className="app-main">
+                    <div className="progress-container">
+                        <div className="progress-dots">
+                            {scenesData.map((_, i) => (
+                                <button key={i} className={`progress-dot ${currentScene === i ? 'active' : ''}`} onClick={() => setCurrentScene(i)} />
+                            ))}
+                        </div>
+                        <div className="progress-text">Escena {currentScene + 1} de {scenesData.length}</div>
+                    </div>
+                    
+                    <div className="scene-view">
+                        <div className="scene-image-container">
+                            <SceneAnimation sceneId={scene.id} />
+                        </div>
+                        
+                        <div className="scene-content">
+                            <h2 className="scene-title">{scene.title}</h2>
+                            <p className="scene-text">{scene.text}</p>
+                            
+                            <div className="phonemes-section">
+                                <h3 className="section-label">Sílabas para practicar:</h3>
+                                <div className="phonemes-container">
+                                    {scene.syllables.map((syllable, index) => (
+                                        <PhonemeButton key={index} syllable={syllable} isActive={activePhoneme === syllable} onClick={() => handlePhonemeClick(syllable)} />
+                                    ))}
+                                </div>
+                            </div>
+                            
+                            <div className="keywords-section">
+                                <h3 className="section-label">Palabras clave:</h3>
+                                <div className="keywords-container">
+                                    {scene.keywords.map((word, index) => (
+                                        <div key={index} className="keyword-chip">{word}</div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="toolbar">
+                        <button className="nav-button" onClick={() => setCurrentScene(Math.max(0, currentScene - 1))} disabled={currentScene === 0}>
+                            <ChevronLeft size={24} /><span>Anterior</span>
+                        </button>
+                        <button className="reset-button" onClick={() => setActivePhoneme(null)}>
+                            <RotateCcw size={20} /><span>Reiniciar</span>
+                        </button>
+                        <button className="nav-button" onClick={() => setCurrentScene(Math.min(scenesData.length - 1, currentScene + 1))} disabled={currentScene === scenesData.length - 1}>
+                            <span>Siguiente</span><ChevronRight size={24} />
+                        </button>
+                    </div>
+                </main>
+                
+                <style>{`
+                    * { box-sizing: border-box; margin: 0; padding: 0; }
+                    .app { min-height: 100vh; background: linear-gradient(135deg, #e8f4f8 0%, #f3e8ff 100%); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1f2937; }
+                    .app-header { background: white; padding: 1.5rem 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; }
+                    .app-title { font-size: 2rem; font-weight: 700; color: #7c3aed; margin-bottom: 0.5rem; }
+                    .app-subtitle { font-size: 1rem; color: #6b7280; font-weight: 500; }
+                    .app-main { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
+                    .progress-container { background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: center; }
+                    .progress-dots { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
+                    .progress-dot { width: 14px; height: 14px; border-radius: 50%; background: #d1d5db; border: none; cursor: pointer; transition: all 0.3s ease; }
+                    .progress-dot:hover { background: #9ca3af; transform: scale(1.2); }
+                    .progress-dot.active { background: #7c3aed; width: 18px; height: 18px; box-shadow: 0 0 0 4px rgba(124,58,237,0.2); }
+                    .progress-text { font-size: 0.95rem; color: #6b7280; font-weight: 500; }
+                    .scene-view { background: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+                    .scene-image-container { margin-bottom: 2rem; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+                    .scene-title { font-size: 1.75rem; font-weight: 700; color: #7c3aed; margin-bottom: 1rem; }
+                    .scene-text { font-size: 1.125rem; line-height: 1.7; color: #374151; margin-bottom: 2rem; font-style: italic; }
+                    .section-label { font-size: 1rem; font-weight: 600; color: #4b5563; margin-bottom: 0.75rem; display: block; }
+                    .phonemes-section { margin-bottom: 2rem; }
+                    .phonemes-container { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+                    .phoneme-button { position: relative; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; font-size: 1.25rem; font-weight: 600; color: #7c3aed; background: #f3e8ff; border: 2px solid #7c3aed; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; overflow: hidden; }
+                    .phoneme-button:hover { background: #e9d5ff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
+                    .phoneme-button.active { background: #7c3aed; color: white; animation: phonemeClick 0.6s ease; }
+                    .phoneme-text { position: relative; z-index: 2; }
+                    .phoneme-icon { position: relative; z-index: 2; opacity: 0.7; }
+                    .phoneme-button.active .phoneme-icon { opacity: 1; animation: iconPulse 0.6s ease; }
+                    @keyframes phonemeClick { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
+                    @keyframes iconPulse { 0%, 100% { transform: scale(1); } 25%, 75% { transform: scale(1.3); } 50% { transform: scale(1.1); } }
+                    .sound-wave { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; gap: 4px; z-index: 1; }
+                    .wave { width: 3px; height: 20px; background: white; border-radius: 3px; animation: waveAnimation 0.6s ease-in-out infinite; }
+                    .wave:nth-child(1) { animation-delay: 0s; }
+                    .wave:nth-child(2) { animation-delay: 0.1s; }
+                    .wave:nth-child(3) { animation-delay: 0.2s; }
+                    @keyframes waveAnimation { 0%, 100% { height: 10px; } 50% { height: 30px; } }
+                    .keywords-section { margin-bottom: 1.5rem; }
+                    .keywords-container { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+                    .keyword-chip { display: inline-flex; align-items: center; padding: 0.5rem 1rem; font-size: 1rem; font-weight: 500; color: #1f2937; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 20px; }
+                    .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+                    .nav-button, .reset-button { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; font-size: 1rem; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+                    .nav-button { background: #7c3aed; color: white; }
+                    .nav-button:hover:not(:disabled) { background: #6d28d9; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
+                    .nav-button:disabled { background: #e5e7eb; color: #9ca3af; cursor: not-allowed; }
+                    .reset-button { background: #f3f4f6; color: #374151; border: 2px solid #d1d5db; }
+                    .reset-button:hover { background: #e5e7eb; border-color: #9ca3af; }
+                    @media (max-width: 768px) {
+                        .app-title { font-size: 1.5rem; }
+                        .scene-title { font-size: 1.5rem; }
+                        .scene-text { font-size: 1rem; }
+                        .toolbar { flex-direction: column; }
+                        .nav-button, .reset-button { width: 100%; justify-content: center; }
+                    }
+                `}</style>
+            </div>
+        );
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+```
+
 </body>
 </html>
